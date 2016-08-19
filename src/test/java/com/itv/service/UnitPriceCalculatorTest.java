@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
@@ -47,11 +48,21 @@ public class UnitPriceCalculatorTest
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    public void testCalculateWithoutPricingRule()
+    @DataProvider(name = "identifierProvider")
+    public static Object[][] identifiers() {
+        return new Object[][] {
+                {new ItemIdentifier("A"), new UnitPrice(new BigDecimal(50))},
+                {new ItemIdentifier("B"), new UnitPrice(new BigDecimal(30))},
+                {new ItemIdentifier("C"), new UnitPrice(new BigDecimal(20))},
+                {new ItemIdentifier("D"), new UnitPrice(new BigDecimal(15))}
+        };
+    }
+
+    @Test(dataProvider = "identifierProvider")
+    public void testCalculateWithoutPricingRule(ItemIdentifier identifier, UnitPrice unitPrice)
     {
-        givenExceptedPrice(UNIT_PRICE, COUNT);
-        givenAnItem(ITEM_IDENTIFIER, COUNT);
+        givenExceptedPrice(unitPrice, COUNT);
+        givenAnItem(identifier, COUNT);
         givenAnEmptyPricingRule();
         givenAUnitPrice();
 
