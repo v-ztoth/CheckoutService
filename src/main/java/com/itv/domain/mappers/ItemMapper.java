@@ -7,8 +7,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 @Component
-public class ItemMapper
+public class ItemMapper implements IItemMapper
 {
+    @Override
     public Item map(PricingRequest pricingRequest)
     {
         Assert.notNull(pricingRequest, "PricingRequest should not be null!");

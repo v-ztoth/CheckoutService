@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
-public class PriceCalculator
+public class PriceCalculator implements IPriceCalculator
 {
     public static final String IDENTIFIER_MISSING_MESSAGE = "Item identifier is not present!";
     public static final String COUNT_MISSING_MESSAGE = "Item count is not present!";
@@ -27,6 +27,7 @@ public class PriceCalculator
         this.unitPriceResolver = unitPriceResolver;
     }
 
+    @Override
     public CalculatedPrice calculate(Item item, Optional<PricingRule> pricingRule)
     {
         Optional<Item> itemOptional = Optional.ofNullable(item);

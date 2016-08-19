@@ -9,8 +9,9 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @Component
-public class PricingRuleMapper
+public class PricingRuleMapper implements IPricingRuleMapper
 {
+    @Override
     public Optional<PricingRule> map(PricingRequest pricingRequest)
     {
         Assert.notNull(pricingRequest, "PricingRequest should not be null!");

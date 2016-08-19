@@ -1,12 +1,13 @@
 package com.itv.controllers;
 
 import com.itv.controllers.model.PricingRequest;
-import com.itv.domain.mappers.ItemMapper;
+import com.itv.domain.mappers.IItemMapper;
+import com.itv.domain.mappers.IPricingRuleMapper;
 import com.itv.domain.mappers.PricingRuleMapper;
 import com.itv.domain.model.CalculatedPrice;
 import com.itv.domain.model.Item;
 import com.itv.domain.model.PricingRule;
-import com.itv.services.PriceCalculator;
+import com.itv.services.IPriceCalculator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,15 +27,15 @@ public class PriceCalculatorController
 {
     private static final Logger LOGGER = Logger.getLogger(PriceCalculatorController.class);
 
-    private PriceCalculator priceCalculator;
+    private IPriceCalculator priceCalculator;
 
-    private ItemMapper itemMapper;
+    private IItemMapper itemMapper;
 
-    private PricingRuleMapper pricingRuleMapper;
+    private IPricingRuleMapper pricingRuleMapper;
 
     @Autowired
-    public PriceCalculatorController(PriceCalculator priceCalculator, ItemMapper itemMapper,
-            PricingRuleMapper pricingRuleMapper)
+    public PriceCalculatorController(IPriceCalculator priceCalculator, IItemMapper itemMapper,
+            IPricingRuleMapper pricingRuleMapper)
     {
         this.priceCalculator = priceCalculator;
         this.itemMapper = itemMapper;
