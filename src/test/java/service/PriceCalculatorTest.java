@@ -1,5 +1,6 @@
 package service;
 
+import domain.model.CalculatedPrice;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -8,8 +9,8 @@ import org.testng.annotations.Test;
 public class PriceCalculatorTest
 {
     private PriceCalculator priceCalculator;
-    private Long actualPrice;
-    private Long exceptedPrice;
+    private CalculatedPrice actualPrice;
+    private CalculatedPrice exceptedPrice;
 
     @BeforeMethod
     public void setup()
@@ -35,7 +36,7 @@ public class PriceCalculatorTest
 
     private void givenExceptedPrice()
     {
-        exceptedPrice = 10L;
+        exceptedPrice = new CalculatedPrice(10L);
     }
 
     private void whenCalculateCalled()
@@ -45,6 +46,7 @@ public class PriceCalculatorTest
 
     private void thenPriceCalculated()
     {
-        Assert.assertEquals(actualPrice, exceptedPrice, "Actual price should be" + exceptedPrice);
+        Assert.assertNotNull(actualPrice, "Calculated price should not be null!");
+        Assert.assertEquals(actualPrice, exceptedPrice, "Actual price should be " + exceptedPrice);
     }
 }

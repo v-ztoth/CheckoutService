@@ -1,9 +1,10 @@
 package service;
 
+import domain.model.CalculatedPrice;
 public class PriceCalculator
 {
-    public Long calculate()
+    public CalculatedPrice calculate()
     {
-        return  10L;
+        return new CalculatedPrice(10L);
     }
 }
