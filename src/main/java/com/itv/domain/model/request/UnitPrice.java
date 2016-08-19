@@ -3,18 +3,20 @@ package com.itv.domain.model.request;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @ToString
 @EqualsAndHashCode
 public class UnitPrice
 {
-    private final Long price;
+    private final BigDecimal price;
 
-    public UnitPrice(Long price)
+    public UnitPrice(BigDecimal price)
     {
         this.price = price;
     }
 
-    public Long getPrice()
+    public BigDecimal getPrice()
     {
         return price;
     }

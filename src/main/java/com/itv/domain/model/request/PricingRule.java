@@ -3,15 +3,17 @@ package com.itv.domain.model.request;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @ToString
 @EqualsAndHashCode
 public class PricingRule
 {
     private final Integer itemNumber;
 
-    private final Long specialUnitPrice;
+    private final BigDecimal specialUnitPrice;
 
-    public PricingRule(Integer itemNumber, Long specialUnitPrice)
+    public PricingRule(Integer itemNumber, BigDecimal specialUnitPrice)
     {
         this.itemNumber = itemNumber;
         this.specialUnitPrice = specialUnitPrice;
@@ -22,7 +24,7 @@ public class PricingRule
         return itemNumber;
     }
 
-    public Long getSpecialUnitPrice()
+    public BigDecimal getSpecialUnitPrice()
     {
         return specialUnitPrice;
     }

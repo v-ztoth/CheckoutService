@@ -9,19 +9,21 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Test(groups = {"unit"})
 public class UnitPriceCalculatorTest
 {
+    private static final UnitPrice UNIT_PRICE = new UnitPrice(new BigDecimal(20));
+    private static final ItemIdentifier ITEM_IDENTIFIER = new ItemIdentifier("C");
+    private static final Integer COUNT = 2;
+
     private PriceCalculator priceCalculator;
     private CalculatedPrice actualPrice;
     private CalculatedPrice exceptedPrice;
     private Item item;
     private Optional<PricingRule> pricingRule;
-    private static final UnitPrice UNIT_PRICE = new UnitPrice(20L);
-    private static final ItemIdentifier ITEM_IDENTIFIER = new ItemIdentifier("C");
-    private static final Integer COUNT = 2;
 
     @BeforeMethod
     public void setup()
@@ -34,7 +36,7 @@ public class UnitPriceCalculatorTest
     }
 
     @Test
-    public void testCalculate()
+    public void testCalculateWithoutPricingRule()
     {
         givenAPriceCalculator();
         givenExceptedPrice(UNIT_PRICE, COUNT);
@@ -89,6 +91,17 @@ public class UnitPriceCalculatorTest
         }
     }
 
+    @Test
+    public void testCalculateWithPricingRule()
+    {
+        givenAPriceCalculator();
+        givenExceptedPrice(UNIT_PRICE, COUNT);
+        givenAnItem(ITEM_IDENTIFIER, UNIT_PRICE, COUNT);
+        givenAnEmptyPricingRule();
+        whenCalculateCalled();
+        thenPriceCalculated();
+    }
+
     private void givenAPriceCalculator()
     {
         priceCalculator = new PriceCalculator();
@@ -96,7 +109,7 @@ public class UnitPriceCalculatorTest
 
     private void givenExceptedPrice(UnitPrice unitPrice, Integer count)
     {
-        Long price = unitPrice.getPrice() * count;
+        BigDecimal price = unitPrice.getPrice().multiply(new BigDecimal(count));
         exceptedPrice = new CalculatedPrice(price);
     }
 

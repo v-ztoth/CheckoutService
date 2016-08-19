@@ -3,18 +3,20 @@ package com.itv.domain.model.response;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @ToString
 @EqualsAndHashCode
 public class CalculatedPrice
 {
-    private final Long price;
+    private final BigDecimal price;
 
-    public CalculatedPrice(Long price)
+    public CalculatedPrice(BigDecimal price)
     {
         this.price = price;
     }
 
-    public Long getPrice()
+    public BigDecimal getPrice()
     {
         return price;
     }

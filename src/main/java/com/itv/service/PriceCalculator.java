@@ -6,6 +6,7 @@ import com.itv.domain.model.request.UnitPrice;
 import com.itv.domain.model.response.CalculatedPrice;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -17,7 +18,7 @@ public class PriceCalculator
     public CalculatedPrice calculate(Item item, Optional<PricingRule> pricingRule)
     {
         Optional<Item> itemOptional = Optional.ofNullable(item);
-        Long unitPrice = itemOptional
+        BigDecimal unitPrice = itemOptional
                 .map(Item::getUnitUnitPrice)
                 .map(UnitPrice::getPrice)
                 .orElseThrow(() -> new IllegalArgumentException(UNIT_PRICE_MISSING_MESSAGE));
@@ -28,9 +29,9 @@ public class PriceCalculator
 
         if (!pricingRule.isPresent())
         {
-            return new CalculatedPrice(unitPrice * count);
+            return new CalculatedPrice(unitPrice.multiply(new BigDecimal(count)));
         }
 
-        return new CalculatedPrice(10L);
+        return new CalculatedPrice(BigDecimal.TEN);
     }
 }
