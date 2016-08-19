@@ -107,10 +107,11 @@ public class UnitPriceCalculatorTest
     @Test
     public void testCalculateWithPricingRule()
     {
-        BigDecimal specialPrice = new BigDecimal(130);
+        String identifier = "A";
+        BigDecimal specialPrice = givenASpecialPrice(identifier);
         int itemCount = 3;
 
-        givenAnItem(new ItemIdentifier("A"), itemCount);
+        givenAnItem(new ItemIdentifier(identifier), itemCount);
         givenAPricingRule(itemCount, specialPrice);
         givenExceptedPrice(specialPrice);
         givenAUnitPrice();
@@ -159,6 +160,19 @@ public class UnitPriceCalculatorTest
 
         when(unitPriceResolver.getUnitPrice("D"))
                 .thenReturn(new UnitPrice(new BigDecimal(15)));
+    }
+
+    private BigDecimal givenASpecialPrice(String identifier)
+    {
+        switch (identifier)
+        {
+            case "A":
+                return new BigDecimal(130);
+            case "B":
+                return new BigDecimal(45);
+            default:
+                throw new IllegalArgumentException("Identifier " + identifier + " not supported!");
+        }
     }
 
     private void whenCalculateCalled()
