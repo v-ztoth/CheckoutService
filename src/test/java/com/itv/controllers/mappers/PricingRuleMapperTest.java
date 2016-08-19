@@ -8,14 +8,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Test(groups = {"unit"})
 public class PricingRuleMapperTest
 {
     private PricingRuleMapper pricingRuleMapper;
     private PricingRequest pricingRequest;
-    private PricingRule actualPricingRule;
-    private PricingRule exceptedPricingRule;
+    private Optional<PricingRule> actualPricingRule;
+    private Optional<PricingRule> exceptedPricingRule;
 
     @BeforeMethod
     public void setup()
@@ -54,7 +55,7 @@ public class PricingRuleMapperTest
 
     private void givenExceptedPricingRule()
     {
-        exceptedPricingRule = new PricingRule(3, new BigDecimal(130));
+        exceptedPricingRule = Optional.of(new PricingRule(3, new BigDecimal(130)));
     }
 
     private void whenMapCalled()

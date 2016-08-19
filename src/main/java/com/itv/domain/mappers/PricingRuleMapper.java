@@ -6,20 +6,24 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Component
 public class PricingRuleMapper
 {
-    public PricingRule map(PricingRequest pricingRequest)
+    public Optional<PricingRule> map(PricingRequest pricingRequest)
     {
         Assert.notNull(pricingRequest, "PricingRequest should not be null!");
 
         Integer discountedItemCount = pricingRequest.getDiscountedItemCount();
-        Assert.notNull(discountedItemCount, "discountedItemCount should not be null!");
 
         BigDecimal discountedPrice = pricingRequest.getDiscountedPrice();
-        Assert.notNull(discountedPrice, "discountedPrice should not be null!");
 
-        return new PricingRule(discountedItemCount, discountedPrice);
+        if (discountedItemCount == null || discountedPrice == null)
+        {
+            return Optional.empty();
+        }
+
+        return Optional.of(new PricingRule(discountedItemCount, discountedPrice));
     }
 }
