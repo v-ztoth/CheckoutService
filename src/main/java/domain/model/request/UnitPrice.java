@@ -1,15 +1,15 @@
-package domain.model;
+package domain.model.request;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @ToString
 @EqualsAndHashCode
-public class CalculatedPrice
+public class UnitPrice
 {
     private final Long price;
 
-    public CalculatedPrice(Long price)
+    public UnitPrice(Long price)
     {
         this.price = price;
     }
