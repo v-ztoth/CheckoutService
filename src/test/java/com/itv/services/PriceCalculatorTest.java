@@ -19,9 +19,8 @@ import java.util.Optional;
 import static org.mockito.Mockito.when;
 
 @Test(groups = {"unit"})
-public class UnitPriceCalculatorTest
+public class PriceCalculatorTest
 {
-    private static final UnitPrice UNIT_PRICE = new UnitPrice(new BigDecimal(20));
     private static final ItemIdentifier ITEM_IDENTIFIER = new ItemIdentifier("C");
     private static final Integer COUNT = 2;
 
