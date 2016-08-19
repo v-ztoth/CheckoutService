@@ -6,9 +6,10 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 
 @Component
-public class UnitPriceResolver
+public class UnitPriceResolver implements IUnitPriceResolver
 {
     // The unit price should come from a database but for the sake of simplicity I used a simple mapping here
+    @Override
     public UnitPrice getUnitPrice(String itemIdentifier)
     {
         switch (itemIdentifier)

@@ -19,10 +19,10 @@ public class PriceCalculator implements IPriceCalculator
     public static final String PRICING_RULE_PRICE_MISSING_MESSAGE = "Pricing rule special price is not present!";
     public static final String INVALID_PRICING_RULE_MESSAGE = "Pricing rule cannot be applied. Item count is not equal with the excepted count";
 
-    private UnitPriceResolver unitPriceResolver;
+    private IUnitPriceResolver unitPriceResolver;
 
     @Autowired
-    public PriceCalculator(UnitPriceResolver unitPriceResolver)
+    public PriceCalculator(IUnitPriceResolver unitPriceResolver)
     {
         this.unitPriceResolver = unitPriceResolver;
     }
