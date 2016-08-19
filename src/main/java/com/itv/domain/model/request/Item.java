@@ -1,4 +1,4 @@
-package domain.model.request;
+package com.itv.domain.model.request;
 
 public class Item
 {

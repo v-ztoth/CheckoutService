@@ -1,9 +1,9 @@
-package service;
+package com.itv.service;
 
-import domain.model.request.Item;
-import domain.model.request.PricingRule;
-import domain.model.request.UnitPrice;
-import domain.model.response.CalculatedPrice;
+import com.itv.domain.model.request.Item;
+import com.itv.domain.model.request.PricingRule;
+import com.itv.domain.model.request.UnitPrice;
+import com.itv.domain.model.response.CalculatedPrice;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

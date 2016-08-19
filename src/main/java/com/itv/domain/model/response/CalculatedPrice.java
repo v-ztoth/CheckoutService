@@ -1,4 +1,4 @@
-package domain.model.response;
+package com.itv.domain.model.response;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
