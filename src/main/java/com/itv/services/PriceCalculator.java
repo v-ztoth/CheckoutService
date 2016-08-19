@@ -1,4 +1,4 @@
-package com.itv.service;
+package com.itv.services;
 
 import com.itv.domain.model.Item;
 import com.itv.domain.model.ItemIdentifier;
@@ -64,7 +64,7 @@ public class PriceCalculator
 
         if (!validateCounts(item, countInPricingRule))
         {
-            throw new IllegalArgumentException("INVALID_PRICING_RULE_MESSAGE");
+            throw new IllegalArgumentException(INVALID_PRICING_RULE_MESSAGE);
         }
 
         return new CalculatedPrice(specialPrice);

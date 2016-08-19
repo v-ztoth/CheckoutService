@@ -1,4 +1,4 @@
-package com.itv.service;
+package com.itv.services;
 
 import com.itv.domain.model.UnitPrice;
 import org.springframework.stereotype.Component;

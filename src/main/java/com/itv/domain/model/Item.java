@@ -1,5 +1,10 @@
 package com.itv.domain.model;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+@ToString
+@EqualsAndHashCode
 public class Item
 {
     private final ItemIdentifier itemIdentifier;
