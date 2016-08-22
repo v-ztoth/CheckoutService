@@ -9,7 +9,7 @@ import com.itv.domain.model.Item;
 import com.itv.domain.model.ItemIdentifier;
 import com.itv.domain.model.PricingRule;
 import com.itv.domain.model.UnitPrice;
-import com.itv.services.IPriceCalculator;
+import com.itv.domain.services.IPriceCalculator;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

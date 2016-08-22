@@ -1,7 +1,6 @@
-package com.itv.api.mappers;
+package com.itv.domain.mappers;
 
 import com.itv.api.model.PricingRequest;
-import com.itv.domain.mappers.ItemMapper;
 import com.itv.domain.model.Item;
 import com.itv.domain.model.ItemIdentifier;
 import com.itv.domain.model.UnitPrice;

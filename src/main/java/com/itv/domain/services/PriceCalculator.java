@@ -1,4 +1,4 @@
-package com.itv.services;
+package com.itv.domain.services;
 
 import com.itv.domain.model.CalculatedPrice;
 import com.itv.domain.model.Item;

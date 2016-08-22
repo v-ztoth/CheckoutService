@@ -6,7 +6,7 @@ import com.itv.domain.mappers.IPricingRuleMapper;
 import com.itv.domain.model.CalculatedPrice;
 import com.itv.domain.model.Item;
 import com.itv.domain.model.PricingRule;
-import com.itv.services.IPriceCalculator;
+import com.itv.domain.services.IPriceCalculator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
