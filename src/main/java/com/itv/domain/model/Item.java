@@ -11,10 +11,13 @@ public class Item
 
     private final Integer count;
 
-    public Item(ItemIdentifier itemIdentifier, Integer count)
+    private final UnitPrice unitPrice;
+
+    public Item(ItemIdentifier itemIdentifier, Integer count, UnitPrice unitPrice)
     {
         this.itemIdentifier = itemIdentifier;
         this.count = count;
+        this.unitPrice = unitPrice;
     }
 
     public ItemIdentifier getItemIdentifier()
@@ -25,5 +28,10 @@ public class Item
     public Integer getCount()
     {
         return count;
+    }
+
+    public UnitPrice getUnitPrice()
+    {
+        return unitPrice;
     }
 }

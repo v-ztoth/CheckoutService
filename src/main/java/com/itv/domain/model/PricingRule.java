@@ -13,10 +13,13 @@ public class PricingRule
 
     private final BigDecimal specialPrice;
 
-    public PricingRule(Integer itemCount, BigDecimal specialPrice)
+    private final ItemIdentifier itemIdentifier;
+
+    public PricingRule(Integer itemCount, BigDecimal specialPrice, ItemIdentifier itemIdentifier)
     {
         this.itemCount = itemCount;
         this.specialPrice = specialPrice;
+        this.itemIdentifier = itemIdentifier;
     }
 
     public Integer getItemCount()
@@ -27,5 +30,10 @@ public class PricingRule
     public BigDecimal getSpecialPrice()
     {
         return specialPrice;
+    }
+
+    public ItemIdentifier getItemIdentifier()
+    {
+        return itemIdentifier;
     }
 }

@@ -1,9 +1,8 @@
-package com.itv.controllers;
+package com.itv.api;
 
-import com.itv.controllers.model.PricingRequest;
+import com.itv.api.model.PricingRequest;
 import com.itv.domain.mappers.IItemMapper;
 import com.itv.domain.mappers.IPricingRuleMapper;
-import com.itv.domain.mappers.PricingRuleMapper;
 import com.itv.domain.model.CalculatedPrice;
 import com.itv.domain.model.Item;
 import com.itv.domain.model.PricingRule;
@@ -19,7 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Optional;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/calculatePrice")
@@ -45,10 +45,10 @@ public class PriceCalculatorController
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CalculatedPrice> calculatePrice(@Valid PricingRequest pricingRequest)
     {
-        Item item = itemMapper.map(pricingRequest);
-        Optional<PricingRule> pricingRule = pricingRuleMapper.map(pricingRequest);
+        List<Item> items = itemMapper.map(pricingRequest);
+        Set<PricingRule> pricingRules = pricingRuleMapper.map(pricingRequest);
 
-        CalculatedPrice calculatedPrice = priceCalculator.calculate(item, pricingRule);
+        CalculatedPrice calculatedPrice = priceCalculator.calculate(items, pricingRules);
 
         return new ResponseEntity<>(calculatedPrice, HttpStatus.OK);
     }

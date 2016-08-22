@@ -1,11 +1,11 @@
 package com.itv.domain.mappers;
 
-import com.itv.controllers.model.PricingRequest;
+import com.itv.api.model.PricingRequest;
 import com.itv.domain.model.PricingRule;
 
-import java.util.Optional;
+import java.util.Set;
 
 public interface IPricingRuleMapper
 {
-    Optional<PricingRule> map(PricingRequest pricingRequest);
+    Set<PricingRule> map(PricingRequest pricingRequest);
 }

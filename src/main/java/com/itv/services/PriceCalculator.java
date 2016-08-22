@@ -1,14 +1,15 @@
 package com.itv.services;
 
-import com.itv.domain.model.Item;
-import com.itv.domain.model.ItemIdentifier;
-import com.itv.domain.model.PricingRule;
 import com.itv.domain.model.CalculatedPrice;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.itv.domain.model.Item;
+import com.itv.domain.model.PricingRule;
+import com.itv.domain.model.UnitPrice;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PriceCalculator implements IPriceCalculator
@@ -19,28 +20,24 @@ public class PriceCalculator implements IPriceCalculator
     public static final String PRICING_RULE_PRICE_MISSING_MESSAGE = "Pricing rule special price is not present!";
     public static final String INVALID_PRICING_RULE_MESSAGE = "Pricing rule cannot be applied. Item count is not equal with the excepted count";
 
-    private IUnitPriceResolver unitPriceResolver;
-
-    @Autowired
-    public PriceCalculator(IUnitPriceResolver unitPriceResolver)
+    @Override
+    public CalculatedPrice calculate(List<Item> items, Set<PricingRule> pricingRules)
     {
-        this.unitPriceResolver = unitPriceResolver;
+        return null;
     }
 
-    @Override
-    public CalculatedPrice calculate(Item item, Optional<PricingRule> pricingRule)
+    private CalculatedPrice calculate(Item item, Optional<PricingRule> pricingRule)
     {
         Optional<Item> itemOptional = Optional.ofNullable(item);
-
-        String identifier = itemOptional.map(Item::getItemIdentifier)
-                .map(ItemIdentifier::getIdentifier)
-                .orElseThrow(() -> new IllegalArgumentException(IDENTIFIER_MISSING_MESSAGE));
 
         Integer count = itemOptional
                 .map(Item::getCount)
                 .orElseThrow(() -> new IllegalArgumentException(COUNT_MISSING_MESSAGE));
 
-        BigDecimal unitPrice = unitPriceResolver.getUnitPrice(identifier).getPrice();
+        BigDecimal unitPrice = itemOptional
+                .map(Item::getUnitPrice)
+                .map(UnitPrice::getPrice)
+                .orElseThrow(() -> new IllegalArgumentException(COUNT_MISSING_MESSAGE));
 
         if (!pricingRule.isPresent())
         {

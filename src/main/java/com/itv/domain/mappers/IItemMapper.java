@@ -1,9 +1,11 @@
 package com.itv.domain.mappers;
 
-import com.itv.controllers.model.PricingRequest;
+import com.itv.api.model.PricingRequest;
 import com.itv.domain.model.Item;
+
+import java.util.List;
 
 public interface IItemMapper
 {
-    Item map(PricingRequest pricingRequest);
+    List<Item> map(PricingRequest pricingRequest);
 }
