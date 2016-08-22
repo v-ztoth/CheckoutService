@@ -13,10 +13,15 @@ public class Item
 {
     @NotNull
     @Size(min = 1, max = 1, message = "itemIdentifier should be one character")
-    private final String identifier;
+    private String identifier;
 
     @NotNull
-    private final BigDecimal unitPrice;
+    private BigDecimal unitPrice;
+
+    public Item()
+    {
+
+    }
 
     public Item(String identifier, BigDecimal unitPrice)
     {

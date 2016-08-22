@@ -64,12 +64,17 @@ public class PriceCalculator implements IPriceCalculator
                 .map(UnitPrice::getPrice)
                 .orElseThrow(() -> new IllegalArgumentException(UNIT_PRICE_MISSING_MESSAGE));
 
-        if (!pricingRule.isPresent())
+        if (isPricingRuleApplicable(pricingRule, item))
         {
-            return new CalculatedPrice(unitPrice.multiply(new BigDecimal(count)));
+            return handlePricingRule(item, pricingRule);
         }
 
-        return handlePricingRule(item, pricingRule);
+        return new CalculatedPrice(unitPrice.multiply(new BigDecimal(count)));
+    }
+
+    private boolean isPricingRuleApplicable(Optional<PricingRule> pricingRule, Item item)
+    {
+        return pricingRule.isPresent() && item.getCount().equals(pricingRule.get().getItemCount());
     }
 
     // The discount is applied for 3 "A" item only according to the task.

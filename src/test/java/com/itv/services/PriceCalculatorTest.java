@@ -108,7 +108,7 @@ public class PriceCalculatorTest
     }
 
     @Test
-    public void testCalculateWithPricingRule()
+    public void testCalculateWithApplicablePricingRule()
     {
         givenPriceCalculator();
 
@@ -134,6 +134,39 @@ public class PriceCalculatorTest
         givenAPricingRule(pricingRules);
 
         givenExceptedPrice(new BigDecimal(175));
+
+        whenCalculateCalled();
+
+        thenPriceCalculated();
+    }
+
+    @Test
+    public void testCalculateWithNotApplicablePricingRule()
+    {
+        givenPriceCalculator();
+
+        List<Item> itemList = new ArrayList<>();
+
+        Item itemA = new Item(new ItemIdentifier("A"), 2, new UnitPrice(new BigDecimal(50)));
+        Item itemB = new Item(new ItemIdentifier("B"), 1, new UnitPrice(new BigDecimal(30)));
+
+        itemList.add(itemA);
+        itemList.add(itemB);
+
+        givenAnItemList(itemList);
+
+
+        Set<PricingRule> pricingRules = new HashSet<>();
+
+        PricingRule pricingRuleA = new PricingRule(3, new BigDecimal(130), new ItemIdentifier("A"));
+        PricingRule pricingRuleB = new PricingRule(2, new BigDecimal(45), new ItemIdentifier("B"));
+
+        pricingRules.add(pricingRuleA);
+        pricingRules.add(pricingRuleB);
+
+        givenAPricingRule(pricingRules);
+
+        givenExceptedPrice(new BigDecimal(130));
 
         whenCalculateCalled();
 

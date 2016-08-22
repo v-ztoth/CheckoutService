@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,8 +43,8 @@ public class PriceCalculatorController
         this.pricingRuleMapper = pricingRuleMapper;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CalculatedPrice> calculatePrice(@Valid PricingRequest pricingRequest)
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CalculatedPrice> calculatePrice(@Valid @RequestBody PricingRequest pricingRequest)
     {
         List<Item> items = itemMapper.map(pricingRequest);
         Set<PricingRule> pricingRules = pricingRuleMapper.map(pricingRequest);

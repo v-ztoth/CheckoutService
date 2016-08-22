@@ -14,14 +14,19 @@ public class PricingRule
 {
     @NotNull
     @Size(min = 1, max = 1, message = "itemIdentifier should be one character")
-    private final String itemIdentifier;
+    private String itemIdentifier;
 
     @NotNull
     @Min(value = 1, message = "discountedItemCount cannot be less than 1")
-    private final Integer itemCount;
+    private Integer itemCount;
 
     @NotNull
-    private final BigDecimal specialPrice;
+    private BigDecimal specialPrice;
+
+    public PricingRule()
+    {
+
+    }
 
     public PricingRule(String itemIdentifier, Integer itemCount, BigDecimal specialPrice)
     {
