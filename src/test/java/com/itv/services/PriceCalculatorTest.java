@@ -1,179 +1,187 @@
 package com.itv.services;
 
+import com.itv.domain.model.CalculatedPrice;
+import com.itv.domain.model.Item;
+import com.itv.domain.model.ItemIdentifier;
+import com.itv.domain.model.PricingRule;
+import com.itv.domain.model.UnitPrice;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Test(groups = {"unit"})
 public class PriceCalculatorTest
 {
-//    private static final ItemIdentifier ITEM_IDENTIFIER = new ItemIdentifier("C");
-//    private static final Integer COUNT = 2;
-//
-//    private CalculatedPrice actualPrice;
-//    private CalculatedPrice exceptedPrice;
-//    private Item item;
-//    private Optional<PricingRule> pricingRule;
-//
-//    @InjectMocks
-//    private PriceCalculator priceCalculator;
-//
-//    @BeforeMethod
-//    public void setup()
-//    {
-//        priceCalculator = null;
-//        actualPrice = null;
-//        exceptedPrice = null;
-//        item = null;
-//        pricingRule = Optional.empty();
-//
-//        MockitoAnnotations.initMocks(this);
-//    }
-//
-//    @DataProvider(name = "identifierProvider")
-//    public static Object[][] identifiers() {
-//        return new Object[][] {
-//                {new ItemIdentifier("A"), new UnitPrice(new BigDecimal(50))},
-//                {new ItemIdentifier("B"), new UnitPrice(new BigDecimal(30))},
-//                {new ItemIdentifier("C"), new UnitPrice(new BigDecimal(20))},
-//                {new ItemIdentifier("D"), new UnitPrice(new BigDecimal(15))}
-//        };
-//    }
-//
-//    @Test(dataProvider = "identifierProvider")
-//    public void testCalculateWithoutPricingRule(ItemIdentifier identifier, UnitPrice unitPrice)
-//    {
-//        givenExceptedPrice(unitPrice, COUNT);
-//        givenAnItem(identifier, COUNT);
-//        givenAnEmptyPricingRule();
-//        givenAUnitPrice();
-//
-//        whenCalculateCalled();
-//
-//        thenPriceCalculated();
-//    }
-//
-//    @Test(expectedExceptions = IllegalArgumentException.class)
-//    public void testCalculateWithNullItem()
-//    {
-//        givenAnEmptyPricingRule();
-//
-//        whenCalculateCalled();
-//
-//        thenPriceCalculated();
-//    }
-//
-//    @Test
-//    public void testCalculateWithItemWithNoIdentifier()
-//    {
-//        givenAnItem(null, COUNT);
-//        givenAnEmptyPricingRule();
-//
-//        try
-//        {
-//            whenCalculateCalled();
-//            Assert.fail();
-//        }
-//        catch (IllegalArgumentException ex)
-//        {
-//            Assert.assertEquals(ex.getMessage(), PriceCalculator.IDENTIFIER_MISSING_MESSAGE);
-//        }
-//    }
-//
-//    @Test
-//    public void testCalculateWithItemWithNoCount()
-//    {
-//        givenAnItem(ITEM_IDENTIFIER, null);
-//        givenAnEmptyPricingRule();
-//
-//        try
-//        {
-//            whenCalculateCalled();
-//            Assert.fail();
-//        }
-//        catch (IllegalArgumentException ex)
-//        {
-//            Assert.assertEquals(ex.getMessage(), PriceCalculator.COUNT_MISSING_MESSAGE);
-//        }
-//    }
-//
-//    @Test
-//    public void testCalculateWithPricingRule()
-//    {
-//        String identifier = "A";
-//        BigDecimal specialPrice = givenASpecialPrice(identifier);
-//        int itemCount = 3;
-//
-//        givenAnItem(new ItemIdentifier(identifier), itemCount, new UnitPrice(new BigDecimal(50)));
-//        givenAPricingRule(itemCount, specialPrice);
-//        givenExceptedPrice(specialPrice);
-//        givenAUnitPrice();
-//
-//        whenCalculateCalled();
-//
-//        thenPriceCalculated();
-//    }
-//
-//    private void givenExceptedPrice(UnitPrice unitPrice, Integer count)
-//    {
-//        BigDecimal price = unitPrice.getPrice().multiply(new BigDecimal(count));
-//        exceptedPrice = new CalculatedPrice(price);
-//    }
-//
-//    private void givenExceptedPrice(BigDecimal specialPrice)
-//    {
-//        exceptedPrice = new CalculatedPrice(specialPrice);
-//    }
-//
-//    private void givenAnItem(ItemIdentifier itemIdentifier, Integer count, UnitPrice unitPrice)
-//    {
-//        item = new Item(itemIdentifier, count, unitPrice);
-//    }
-//
-//    private void givenAnEmptyPricingRule()
-//    {
-//        pricingRule = Optional.empty();
-//    }
-//
-//    private void givenAPricingRule(Integer itemCount, BigDecimal specialPrice)
-//    {
-//        pricingRule = Optional.of(new PricingRule(itemCount, specialPrice));
-//    }
-//
-//    private void givenAUnitPrice()
-//    {
-//        when(unitPriceResolver.getUnitPrice("A"))
-//                .thenReturn(new UnitPrice(new BigDecimal(50)));
-//
-//        when(unitPriceResolver.getUnitPrice("B"))
-//                .thenReturn(new UnitPrice(new BigDecimal(30)));
-//
-//        when(unitPriceResolver.getUnitPrice("C"))
-//                .thenReturn(new UnitPrice(new BigDecimal(20)));
-//
-//        when(unitPriceResolver.getUnitPrice("D"))
-//                .thenReturn(new UnitPrice(new BigDecimal(15)));
-//    }
-//
-//    private BigDecimal givenASpecialPrice(String identifier)
-//    {
-//        switch (identifier)
-//        {
-//            case "A":
-//                return new BigDecimal(130);
-//            case "B":
-//                return new BigDecimal(45);
-//            default:
-//                throw new IllegalArgumentException("Identifier " + identifier + " not supported!");
-//        }
-//    }
-//
-//    private void whenCalculateCalled()
-//    {
-//        actualPrice = priceCalculator.calculate(item, pricingRule);
-//    }
-//
-//    private void thenPriceCalculated()
-//    {
-//        Assert.assertNotNull(actualPrice, "Calculated price should not be null!");
-//        Assert.assertEquals(actualPrice, exceptedPrice, "Actual price should be " + exceptedPrice);
-//    }
+    private CalculatedPrice actualPrice;
+    private CalculatedPrice exceptedPrice;
+    private List<Item> items;
+    private Set<PricingRule> pricingRules;
+    private PriceCalculator priceCalculator;
+
+    @BeforeMethod
+    public void setup()
+    {
+        priceCalculator = null;
+        actualPrice = null;
+        exceptedPrice = null;
+        items = null;
+        pricingRules = null;
+    }
+
+    @Test()
+    public void testCalculateWithoutPricingRule()
+    {
+        givenPriceCalculator();
+
+        List<Item> itemList = new ArrayList<>();
+
+        Item itemA = new Item(new ItemIdentifier("A"), 2, new UnitPrice(new BigDecimal(50)));
+        Item itemB = new Item(new ItemIdentifier("B"), 1, new UnitPrice(new BigDecimal(30)));
+        Item itemC = new Item(new ItemIdentifier("C"), 1, new UnitPrice(new BigDecimal(20)));
+        Item itemD = new Item(new ItemIdentifier("D"), 1, new UnitPrice(new BigDecimal(15)));
+
+        itemList.add(itemA);
+        itemList.add(itemB);
+        itemList.add(itemC);
+        itemList.add(itemD);
+
+        givenAnItemList(itemList);
+
+        givenExceptedPrice(itemList);
+
+        whenCalculateCalled();
+
+        thenPriceCalculated();
+    }
+
+    @Test
+    public void testCalculateWithNullItem()
+    {
+        givenPriceCalculator();
+
+        List<Item> itemList = new ArrayList<>();
+        Item itemA = null;
+        itemList.add(itemA);
+
+        givenAnItemList(itemList);
+
+        givenExceptedPrice(BigDecimal.ZERO);
+
+        whenCalculateCalled();
+
+        thenPriceCalculated();
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCalculateWithNullUnitPrice()
+    {
+        givenPriceCalculator();
+
+        List<Item> itemList = new ArrayList<>();
+        Item itemA = new Item(new ItemIdentifier("A"), 1, null);
+        itemList.add(itemA);
+
+        givenAnItemList(itemList);
+
+        whenCalculateCalled();
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCalculateWithItemWithNoCount()
+    {
+        givenPriceCalculator();
+
+        List<Item> itemList = new ArrayList<>();
+        Item itemA = new Item(new ItemIdentifier("A"), null, new UnitPrice(new BigDecimal(50)));
+        itemList.add(itemA);
+
+        givenAnItemList(itemList);
+
+        whenCalculateCalled();
+    }
+
+    @Test
+    public void testCalculateWithPricingRule()
+    {
+        givenPriceCalculator();
+
+        List<Item> itemList = new ArrayList<>();
+
+        Item itemA = new Item(new ItemIdentifier("A"), 3, new UnitPrice(new BigDecimal(50)));
+        Item itemB = new Item(new ItemIdentifier("B"), 2, new UnitPrice(new BigDecimal(30)));
+
+        itemList.add(itemA);
+        itemList.add(itemB);
+
+        givenAnItemList(itemList);
+
+
+        Set<PricingRule> pricingRules = new HashSet<>();
+
+        PricingRule pricingRuleA = new PricingRule(3, new BigDecimal(130), new ItemIdentifier("A"));
+        PricingRule pricingRuleB = new PricingRule(2, new BigDecimal(45), new ItemIdentifier("B"));
+
+        pricingRules.add(pricingRuleA);
+        pricingRules.add(pricingRuleB);
+
+        givenAPricingRule(pricingRules);
+
+        givenExceptedPrice(new BigDecimal(175));
+
+        whenCalculateCalled();
+
+        thenPriceCalculated();
+    }
+
+    private void givenPriceCalculator()
+    {
+        priceCalculator = new PriceCalculator();
+    }
+
+    private void givenExceptedPrice(List<Item> itemList)
+    {
+        List<BigDecimal> prices = itemList.stream()
+                .map(item -> item.getUnitPrice().getPrice().multiply(new BigDecimal(item.getCount())))
+                .collect(
+                    Collectors.toList()
+                );
+
+        BigDecimal calculatedAmount =  prices.stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        exceptedPrice = new CalculatedPrice(calculatedAmount);
+    }
+
+    private void givenExceptedPrice(BigDecimal price)
+    {
+        exceptedPrice = new CalculatedPrice(price);
+    }
+
+    private void givenAnItemList(List<Item> itemList)
+    {
+        items = itemList;
+    }
+
+    private void givenAPricingRule(Set<PricingRule> pricingRuleSet)
+    {
+        pricingRules = pricingRuleSet;
+    }
+
+    private void whenCalculateCalled()
+    {
+        actualPrice = priceCalculator.calculate(items, pricingRules);
+    }
+
+    private void thenPriceCalculated()
+    {
+        Assert.assertNotNull(actualPrice, "Calculated price should not be null!");
+        Assert.assertEquals(actualPrice, exceptedPrice, "Actual price should be " + exceptedPrice);
+    }
 }

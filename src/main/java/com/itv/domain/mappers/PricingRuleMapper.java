@@ -29,7 +29,9 @@ public class PricingRuleMapper implements IPricingRuleMapper
 
         Set<com.itv.api.model.PricingRule> apiPricingRules = apiPricingRulesOptional.get();
 
-        return apiPricingRules.stream().map(this::map).collect(Collectors.toSet());
+        return apiPricingRules.stream()
+                .map(this::map)
+                .collect(Collectors.toSet());
     }
 
     private PricingRule map(com.itv.api.model.PricingRule apiPricingRule)
