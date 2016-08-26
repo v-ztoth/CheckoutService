@@ -57,10 +57,6 @@ There are 2 item "A" in the request so the special rule cannot be applied. The r
 	{
 		"identifier": "A",
 		"unitPrice": 50
-	},
-	{
-		"identifier": "A",
-		"unitPrice": 50
 	}],
 	"pricingRules": [{
 		"itemIdentifier": "A",
